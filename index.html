@@ -13,7 +13,6 @@
             --deep-red: #c9184a;
         }
 
-        /* Essential Mobile Fix: Prevents scrolling and jumps */
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -25,16 +24,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100dvh; /* Dynamic height for mobile browsers */
+            height: 100dvh;
             width: 100vw;
             background-color: #fff0f3;
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            position: fixed; /* Locks the screen on mobile */
+            position: fixed;
             transition: background-color 1.5s ease;
         }
 
-        /* Background Hearts */
         .heart-bg {
             position: fixed;
             top: 0;
@@ -45,7 +43,6 @@
             z-index: 0;
         }
 
-        /* Container - Perfectly Centered */
         .container {
             z-index: 10;
             background: rgba(255, 255, 255, 0.9);
@@ -55,7 +52,7 @@
             backdrop-filter: blur(10px);
             width: 90%;
             max-width: 400px;
-            min-height: 450px;
+            min-height: 480px;
             text-align: center;
             position: relative;
             display: flex;
@@ -70,15 +67,16 @@
             color: var(--deep-red);
             font-size: 2.2rem;
             margin: 10px 0;
+            width: 100%;
         }
 
         p {
             font-size: 1.1rem;
             color: #444;
             margin-bottom: 20px;
+            width: 100%;
         }
 
-        /* Envelope Step */
         .envelope-wrapper {
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -89,24 +87,30 @@
             display: block;
         }
 
-        /* Photo/Heart Circle */
+        /* FIXED CENTERED CIRCLE */
         .photo-placeholder {
             width: 100px;
             height: 100px;
             background: var(--soft-pink);
             border-radius: 50%;
-            margin-bottom: 1rem;
+            margin: 0 auto 1.5rem auto; /* Ensures horizontal centering */
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* Prevents squeezing */
         }
 
-        /* Interactive Button Area */
+        .photo-placeholder span {
+            display: block;
+            line-height: 1;
+            margin-left: 2px; /* Slight optical adjustment for emoji centering */
+        }
+
         .buttons-container {
             position: relative;
             width: 100%;
-            height: 140px; /* Play area for No button */
+            height: 140px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -136,12 +140,11 @@
         #no-btn {
             background-color: #f0f0f0;
             color: #888;
-            position: relative; /* Becomes absolute on move */
+            position: relative;
             z-index: 4;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Animations */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -194,12 +197,11 @@
         <div id="final-step" class="hidden">
             <h1 style="font-size: 3rem;">Yay! ❤️</h1>
             <p style="font-weight: 700; color: var(--deep-red);">I knew you'd say yes!</p>
-            <div style="font-size: 50px;">🌹🍫✨</div>
+            <div style="font-size: 60px;">🌹🍫✨</div>
         </div>
     </div>
 
     <script>
-        // 1. Floating Background Hearts
         function createHeart(isExplosion = false) {
             const heart = document.createElement('div');
             const icons = ['❤️', '💖', '✨', '🌸', '💝'];
@@ -244,7 +246,6 @@
 
         setInterval(() => createHeart(false), 400);
 
-        // 2. Button Interaction
         function openLetter() {
             document.getElementById('envelope-section').classList.add('hidden');
             document.getElementById('main-content').classList.remove('hidden');
@@ -254,7 +255,6 @@
             const btn = document.getElementById('no-btn');
             const container = document.getElementById('btn-area');
             
-            // Stay strictly within the container padding
             const maxX = container.clientWidth - btn.offsetWidth;
             const maxY = container.clientHeight - btn.offsetHeight;
 
@@ -272,7 +272,6 @@
             document.body.style.backgroundColor = "#ffccd5";
             document.getElementById('main-card').style.animation = "shake 0.5s ease";
 
-            // Celebration Burst
             for(let i = 0; i < 100; i++) {
                 setTimeout(() => createHeart(true), i * 10);
             }
